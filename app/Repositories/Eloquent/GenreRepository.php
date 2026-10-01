@@ -43,6 +43,28 @@ class GenreRepository extends BaseRepository implements GenreRepositoryInterface
         return Genre::hydrate(json_decode($json, true));
     }
 
+    /*
+        public function filter(array $filters, string $sortBy = 'name', string $order = 'asc'): Collection
+        {
+            $sortBy = in_array($sortBy, self::SORTABLE) ? $sortBy : 'name';
+            $order = strtolower($order) === 'desc' ? 'desc' : 'asc';
+            $key = 'genres.index.'.md5(serialize(compact('filters', 'sortBy', 'order')));
+    
+            $json = Cache::remember($key, now()->addMinutes(30), function () use ($filters, $sortBy, $order) {
+                return Genre::query()
+                    ->when(isset($filters['search']),
+                        fn ($q) => $q->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($filters['search']).'%']))
+                    ->when(isset($filters['is_active']),
+                        fn ($q) => $q->where('is_active', filter_var($filters['is_active'], FILTER_VALIDATE_BOOLEAN)))
+                    ->orderBy($sortBy, $order)
+                    ->get()
+                    ->toJson();
+            });
+    
+            return Genre::hydrate(json_decode($json, true));
+        }
+    */
+
     /**
      * @inheritDoc
      */
